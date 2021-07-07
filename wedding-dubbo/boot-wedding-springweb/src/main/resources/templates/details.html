@@ -1,0 +1,494 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>商家详情</title>
+    <base th:href="${#request.getContextPath()+'/'}">
+    <link href="css/wedding.css" rel="stylesheet"/>
+    <link href="css/wedding-3.css" rel="stylesheet"/>
+    <link href="css/wedding-2.css" rel="stylesheet"/>
+    <!--引用百度地图API-->
+    <style type="text/css">
+        html,body{margin:0;padding:0;}
+        .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+        .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+</head>
+<body>
+<div id="public-navbar">
+    <div class="layout_center layout_clear" style="overflow:visible">
+        <div class="layout_fl">你好，欢迎来到 婚礼汇</div>
+        <ul class="layout_fr fl_li">
+            <li>
+                <div class="use-layout">
+                    <a>
+                        <span class="use-status">会员中心</span>
+                    </a>
+                    <div class="use-option" style="display:none">
+                        <a>会员登录</a>
+                        <a>免费注册</a>
+                    </div>
+                    <i class="use-arrow page_icon"></i>
+                </div>
+            </li>
+            <li>
+                <span class="use-hr"></span>
+            </li>
+            <li>
+                <a>我的购物车</a>
+            </li>
+            <li>
+                <span class="use-hr"></span>
+            </li>
+            <li>
+                <div class="use-layout">
+                    <a>
+                        <span class="use-status">商户平台</span>
+                    </a>
+                    <div class="use-option" style="display: none;">
+                        <a>商户登录</a>
+                        <a>免费入驻</a>
+                    </div>
+                    <i class="use-arrow page_icon"></i>
+                </div>
+            </li>
+            <li>
+                <span class="use-hr"></span>
+            </li>
+            <li>
+                <a>联系我们</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="public-toolbar" class="hidden_active">
+    <div class="layout_center layout_clear">
+        <div class="page-logo layout_fl"><a><img src="img/rxT54692503vu.jpg"></a></div>
+        <div class="page-search layout_fl">
+            <div class="page-search-bar layout_clear">
+                <div class="page-search-text layout_fl">
+                    <input type="text" class="search-cover" placeholder="搜索产品或店铺">
+                </div>
+                <div class="page-search-btn layout_fl">
+                    <input type="button" value="搜索" class="search-button">
+                </div>
+            </div>
+            <ul class="page-search-key layout_clear fl_li" >
+                <li class="search-key-ous">大家都在搜：</li>
+                <li><a>酒店</a></li>
+                <li><a>婚纱</a></li>
+                <li><a>婚庆用车</a></li>
+                <li><a>度假</a></li>
+            </ul>
+        </div>
+        <div class="page-release layout_fl">
+            <a>立即发布需求</a>
+        </div>
+        <div class="page-tels layout_fr">
+            <span class="tel-show">全国免费咨询热线</span>
+            <span class="tel-pink"><strong>023-6766-4541</strong></span>
+        </div>
+    </div>
+</div>
+<div id="page-middle-bar">
+    <div class="layout_center layout_clear">
+        <div class="button layout_fl">全部分类</div>
+        <ul class="layout_clear layout_fl fl_li">
+            <li><a>首页</a></li>
+            <li><a href="field.html">婚宴场地</a></li>
+            <li><a>婚纱摄影</a></li>
+            <li><a>婚庆用车</a></li>
+            <li><a>婚庆公司</a></li>
+            <li><a>婚具租赁</a></li>
+            <li><a>定制人员</a></li>
+            <li><a>婚品商城</a></li>
+            <li><a>蜜月度假</a></li>
+            <li><a>视频秀</a></li>
+        </ul>
+    </div>
+</div>
+<div>
+    <div class="layout_center">
+        <div class="path">
+            <span><a href="wedding.jsp">婚礼汇</a></span>
+            <em>></em>
+            <a href="HotelInfoServlet.do">婚宴场地</a>
+            <em>></em>
+            <a class="page cur" th:text="${info.hotelName}">XX酒店</a>
+        </div>
+        <div id="shops-header" class="second_clear">
+            <div class="layout_fl shops-cover">
+                <img th:src="${info.hotelImg}">
+            </div>
+            <div class="shops-deta second_clear layout_fl">
+                <div class="shops-info layout_fl">
+                    <h1 class="shops-info-name" th:text="${info.hotelName}">XX酒店</h1>
+                    <div class="shops-info-local" id="hoteladd">
+                        <i class="page_icon in-shop-local-icon" ></i>
+                        <span th:text="${info.hotelAddress}">XX地址</span>
+                    </div>
+                    <ul class="shops-info-list">
+                        <li>联系电话：<span th:text="${info.hotelTel}"></span>888888</li>
+                        <li id="addpoint" >公交线路：<span th:text="${info.infoBus}">11</span></li>
+
+                    </ul>
+                </div>
+                <div class="shops-label layout_fl">
+                    <h4 class="shops-label-name">店铺：XX</h4>
+                    <div class="shops-label-param">
+                        	<span class="shops-label-item">
+                            	<span class="shops-label-up">描述</span>
+                           		<span class="shops-label-down">4.8</span>
+                            </span>
+                        <span class="shops-label-item">
+                            	<span class="shops-label-up">服务</span>
+                            	<span class="shops-label-down">5.8</span>
+                            </span>
+                        <span class="shops-label-item">
+                            	<span class="shops-label-up">保障</span>
+                            	<span class="shops-label-down">4.8</span>
+                            </span>
+                    </div>
+                    <a class="shops-btn shops-btn0">收藏店铺</a>
+                    <a class="shops-btn shops-btn1">联系客服</a>
+                </div>
+            </div>
+        </div>
+        <div id="shops-section">
+            <div class="shops-grids">
+                <div class="shops-grids-hd second_clear"></div>
+            </div>
+            <div class="shops-grids">
+                <div class="shops-grids-hd">
+                    <h1 class="shops-grids-h1">婚宴场地</h1>
+                </div>
+                <div class="shops-gdx-wrap">
+                    <ul class="shops-gdx-list3">
+                        <li th:each="room:${rooms}">
+                            <div class="shops-gdx-trans">
+                                <div class="shops-trans-cover">
+                                    <span class="shops-case-lab">4张</span>
+                                    <img th:src="${room.roomImg}">
+                                </div>
+                                <div class="shops-trans-teble">
+                                    <p th:text="${room.roomName}">XX房间</p>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="lab" >空高</span><span th:text="${room.roomHeight}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">低消</span><span th:text="${room.roomName}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">形状</span><span th:text="${room.roomForm}">11</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="lab">柱子</span><span th:text="${room.roomPillar}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">晚餐</span><span th:text="${room.roomDinner}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">电费</span><span th:text="${room.roomElectricFee}">11</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="lab">拆分</span><span th:text="${room.roomSplit}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">面积</span><span th:text="${room.roomArea}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">灯光</span><span th:text="${room.roomLamplight}">11</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="lab">LED</span><span th:text="${room.roomLed}">11</span>
+                                            </td>
+                                            <td>
+                                                <span class="lab">桌数</span><span th:text="${room.roomTables}">11</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="shops-grids">
+                <div class="shops-grids-hd">
+                    <h1 class="shops-grids-h1">商家信息</h1>
+                </div>
+                <div class="shops-gdx-wrap">
+                    <div class="shops-gdx-transdx">
+                        <div class="shops-transdx-map" id="mymap" style="overflow: hidden; color: rgb(0, 0, 0); text-align: left; z-index: 0; background-color: rgb(243, 241, 236);"></div>
+                        <div>
+                            <div class="shops-transdx-table">
+                                <ul>
+                                    <li style="width:193.5px">
+                                        <span class="lab">1星级</span><span th:text="${info.infoStarLevel}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">2装修时间</span><span th:text="${info.infoDecorateTime}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">3服务费</span><span th:text="${info.infoServiceFee}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">4订金</span><span th:text="${info.infoSubscription}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">5进场费</span><span th:text="${info.infoEnterFee}">11</span></li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">6婚房化妆间</span><span th:text="${info.infoDressingRoom}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">7麦克风</span><span th:text="${info.infoMicrophone}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">8投影仪</span><span th:text="${info.infoProjector}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">9桌布</span><span th:text="${info.infoTablecloth}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">10电费</span><span th:text="${info.infoElectricCharge}">11</span>
+                                    </li>
+                                    <li style="width:388px">
+                                        <span class="lab">11公交线路</span><span  style="width:280px !important;" th:text="${info.infoBus}">11</span>
+                                    </li>
+                                    <li style="width:193.5px">
+                                        <span class="lab">12棋牌娱乐</span><span th:text="${info.infoAmusement}">11</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="shops-transdx-text">
+                                <div class="shops-transdx-inset">无</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shops-grids">
+                <div class="shops-grids-hd">
+                    <h1 class="shops-grids-h1">婚宴套餐</h1>
+                </div>
+                <div class="shops-gdx-wrap">
+                    <ul class="shops-gdx-list2 second_clear fl_li">
+                        <li th:each="package:${packages}">
+                            <a th:href="'/package/findPackage?packageId='+${package.packageId}">
+                                <div>
+                                    <div class="gdx-img">
+                                        <img th:src="${package.packageImg}" style="width: 100%; display: block;">
+                                    </div>
+                                    <div class="gdx-data">
+                                        <div class="gdx-name" th:text="${package.packageName}">11</div>
+                                        <div class="gdx-price">
+                                            ￥<span class="price-strong" th:text="${package.packagePrice}">￥11</span>
+                                        </div>
+                                        <div class="gdx-label">
+                                            <p class="label-line">
+                                                产品摘要：<span th:text="${package.packageContent}"></span>
+                                            </p>
+                                            <p class="label-line">
+                                                销量：<span th:text="${package.packageSales}"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="shops-grids">
+                <div class="shops-speak second_clear">
+                    <div class="shops-speak-label layout_fl">会员点评</div>
+                    <a class="layout_fr">全部点评<i class="page_icon in-shop-arrow" style="top:14px"></i></a>
+                </div>
+                <div class="shops-speak-area">
+                    <div class="cmts-more">
+                        <a>查看更多</a>
+                    </div>
+                    <div class="cmts-btn">
+                        <span></span>
+                        <a>我要评论</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-footer">
+    <div class="layout_center">
+        <div class="footer-list">
+            <dl class="footer-item">
+                <h3>新手上路</h3>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>如何注册</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>如何登录</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>如何预订</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>购物流程</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>预订须知</dd>
+                </a>
+            </dl>
+            <dl class="footer-item">
+                <h3>公司信息</h3>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>关于我们</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>用户协议</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>隐私申明</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>商家入驻协议</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>安全须知</dd>
+                </a>
+            </dl>
+            <dl class="footer-item">
+                <h3>合作联系</h3>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>联系我们</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>招商加盟</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>商户平台</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>招聘信息</dd>
+                </a>
+            </dl>
+            <dl class="footer-item">
+                <h3>帮助中心</h3>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>忘记密码</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>常见问题</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>在线客服</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>如何上传产品</dd>
+                </a>
+                <a href="Untitled-2.html" target="_blank">
+                    <dd><b></b>如何成为商家</dd>
+                </a>
+            </dl>
+            <div class="footer-mobile">
+                <img src="img/SVT58398773Nz.jpg">
+                <h2>官方微信</h2>
+            </div>
+        </div>
+        <div class="footer-data0">
+            <a><i class="footer-ad0" title="可信网站身份验证"></i></a>
+            <a><i class="footer-ad1" title="重庆网警备案"></i></a>
+            <a><i class="footer-ad2" title="重庆工商行政管理"></i></a>
+            <a><i class="footer-ad3" title="安全联盟认证"></i></a>
+        </div>
+        <div class="footer-data1">
+            友情链接：
+            <a href="https://www.baidu.com/" target="_blank">百度</a>
+            <em>|</em>
+            <a href="https://www.taobao.com/">淘宝</a>
+        </div>
+        <div class="footer-data2">
+            CopyRight 2016 婚礼汇 All Rights Reserved
+            <a href="Untitled-2.html">渝ICP备14001673号</a>
+        </div>
+    </div>
+</div>
+<a target="_blank" title="联系我们" href="Untitled-2.html">
+    <span id="askus">&nbsp;</span>
+</a>
+<div id="gotop" title="返回顶部" style="display:block; background:url(img/gotop.png) -70px 0px no-repeat"></div>
+
+<!--经度和维度的绑定-->
+<input type="hidden" id="jd" th:value="${info.infoCoordinatesA}">
+<input type="hidden" id="wd" th:value="${info.infoCoordinatesB}">
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=yaMnqGiWDKzftga34qkznzCydHNs2H52"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&amp;ak=yaMnqGiWDKzftga34qkznzCydHNs2H52&amp;services=&amp;t=20170424105420"></script>
+<script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+        createMap();//创建地图
+        setMapEvent();//设置地图事件
+        addMapControl();//向地图添加控件
+    }
+
+    //创建地图函数：
+    function createMap(){
+        var map = new BMap.Map("mymap");//在百度地图容器中创建一个地图
+        //读取经度和维度
+        var jd=document.getElementById("jd").value;
+        var wd=document.getElementById("wd").value;
+        var point = new BMap.Point(jd,wd);//定义一个中心点坐标
+        map.centerAndZoom(point,6);//设定地图的中心点和坐标并将地图显示在地图容器中
+        window.map = map;//将map变量存储在全局
+    }
+
+    //地图事件设置函数：
+    function setMapEvent(){
+        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard();//启用键盘上下左右键移动地图
+    }
+
+    //地图控件添加函数：
+    function addMapControl(){
+        //向地图中添加缩放控件
+        var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+        map.addControl(ctrl_nav);
+        //向地图中添加缩略图控件
+        var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+        map.addControl(ctrl_ove);
+        //向地图中添加比例尺控件
+        var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+        map.addControl(ctrl_sca);
+    }
+
+
+    initMap();//创建和初始化地图
+</script>
+
+<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+    $("#login_register").hide();
+    $("#login_register").hover(function(){
+        $("#login_register").show();
+    },function(){
+        $("#login_register").hide();
+    });
+    $("#member_center").mouseover(function (){
+        $("#login_register").show();
+    });
+</script>
+</body>
+</html>

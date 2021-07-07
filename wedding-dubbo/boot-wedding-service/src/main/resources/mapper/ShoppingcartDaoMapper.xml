@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--和具体的DAO接口配置起来-->
+<mapper namespace="com.whut.wedding.dao.ShoppingcartDao">
+    <resultMap id="shoppingcartMap" type="Shoppingcart">
+        <id property="shoppingcartId" column="shoppingcart_id"/>
+        <result property="shoppingcartTime" column="shoppingcart_time"/>
+        <result property="shoppingcartName" column="shoppingcart_name"/>
+        <result property="shoppingcartType" column="shoppingcart_type"/>
+        <result property="shoppingcartPlace" column="shoppingcart_place"/>
+        <result property="shoppingcartPrice" column="shoppingcart_price"/>
+        <result property="shoppingcartCount" column="shoppingcart_count"/>
+        <result property="tbUserUserTel" column="tb_user_user_tel"/>
+        <result property="shoppingcartImg" column="shoppingcart_img"/>
+        <result property="shoppingcartHotelname" column="shoppingcart_hotelname"/>
+    </resultMap>
+    <insert id="insert" parameterType="Shoppingcart">
+        insert into tb_shoppingcart
+        value ( #{shoppingcartId},#{shoppingcartTime},#{shoppingcartName},
+                #{shoppingcartType},#{shoppingcartPlace},#{shoppingcartPrice},
+                #{shoppingcartCount},#{tbUserUserTel},#{shoppingcartImg},#{shoppingcartHotelname},1 );
+    </insert>
+    <select id="selectShoppingcartsByUserTel" parameterType="java.lang.String" resultMap="shoppingcartMap">
+        select * from tb_shoppingcart where tb_user_user_tel=#{userTel}
+    </select>
+    <update id="updateCount">
+        update tb_shoppingcart set shoppingcart_count=#{count} where shoppingcart_id=#{id}
+    </update>
+    <update id="updateChecked">
+        update tb_shoppingcart set checked=#{checked} where shoppingcart_id=#{id}
+    </update>
+    <select id="selectCheckedShoppingcartsByUserTel" parameterType="java.lang.String" resultMap="shoppingcartMap">
+        select * from tb_shoppingcart where tb_user_user_tel=#{userTel} and checked=1
+    </select>
+</mapper>

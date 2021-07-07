@@ -1,0 +1,12 @@
+com\whut\wedding\entity\Hotel.class
+com\whut\wedding\entity\Page.class
+com\whut\wedding\service\HotelService.class
+com\whut\wedding\service\UserService.class
+com\whut\wedding\service\ShoppingcartService.class
+com\whut\wedding\entity\HotelInfo.class
+com\whut\wedding\service\PackageService.class
+com\whut\wedding\entity\Room.class
+com\whut\wedding\service\RoomService.class
+com\whut\wedding\entity\Package.class
+com\whut\wedding\entity\Shoppingcart.class
+com\whut\wedding\entity\User.class

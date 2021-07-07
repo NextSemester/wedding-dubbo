@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--和具体的DAO接口配置起来-->
+<mapper namespace="com.whut.wedding.dao.RoomDao">
+    <!--将数据库的字段和实体类的字段映射起来-->
+    <resultMap id="RoomMap" type="Room">
+        <!--id是主键，property是实体类的属性名 column是表的字段名 javaType是类型-->
+        <id property="roomId" column="room_id" javaType="java.lang.Long"/>
+
+        <result property="roomImg" column="img_add"/>
+
+        <result property="roomName" column="room_name"/>
+        <result property="roomHeight" column="room_height"/>
+        <result property="roomMinFee" column="room_min_fee"/>
+        <result property="roomForm" column="room_form"/>
+        <result property="roomPillar" column="room_pillar"/>
+        <result property="roomDinner" column="room_dinner"/>
+        <result property="roomElectricFee" column="room_electric_fee"/>
+        <result property="roomSplit" column="room_split"/>
+        <result property="roomArea" column="room_area"/>
+        <result property="roomLamplight" column="room_lamplight"/>
+        <result property="roomLed" column="room_led"/>
+        <result property="roomTables" column="room_tables"/>
+        <result property="tbHotelHotelId" column="tb_hotel_hotelId"/>
+    </resultMap>
+    <!--实现查询SQL语句 id是接口中的方法名 parameterType是方法的参数类型 resultType是返回值类型 resultMap是映射类型-->
+    <select id="selectRoomsByHotelId"  resultMap="RoomMap">
+        SELECT r.*,m.img_add from tb_room r join tb_img m on r.room_id=m.tb_room_room_id where r.tb_hotel_hotel_id=#{hotelId}
+    </select>
+</mapper>
